@@ -57,6 +57,8 @@ function register() {
         })
         .catch((error) => {
             // Handle errors
+            console.error('Registration error:', error);
+
             const errorMessage = error.message;
             errorMessageElement.textContent = errorMessage;
 
@@ -73,6 +75,8 @@ function saveUserData(userId, username) {
     userRef.set({
         username: username,
         profilePicture: '', // You can store the profile picture URL here once uploaded
+        verified: false,
+        banned: false
     });
 }
 
