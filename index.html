@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js"></script>
+    <script src="main.js"></script>
+    <title>Login Page</title>
+</head>
+<body>
+    <div class="container">
+        <div class="logo-container">
+            <img src="your-logo.png" alt="Logo">
+        </div>
+        <div class="login-form">
+            <input type="email" id="email" placeholder="Enter your Email">
+            <input type="password" id="password" placeholder="Enter your Password">
+            <button onclick="login()">
+                <div class="button-loader"></div>
+                Login
+            </button>
+            <p id="error-message" class="error-message"></p>
+            <p class="signup-link">Don't have an account? <a href="signup.html">Sign up here</a></p>
+        </div>
+    </div>
+    <div class="footer-note">
+        Crafted with ❤️ in India
+    </div>
+</body>
+</html>
