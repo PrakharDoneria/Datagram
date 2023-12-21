@@ -65,6 +65,9 @@ function register() {
             // Hide loading animation and restore button text
             buttonLoader.style.display = 'none';
             button.innerText = 'Register';
+
+            // Show an alert with the error message
+            alert(errorMessage);
         });
 }
 
