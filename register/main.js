@@ -1,15 +1,13 @@
 // Your Firebase configuration
 const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_AUTH_DOMAIN",
-    databaseURL: "YOUR_DATABASE_URL", // Realtime Database URL
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_STORAGE_BUCKET",
-    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-    appId: "YOUR_APP_ID"
+  apiKey: "AIzaSyC-ZtQ4N3d5ZYZcUCETe0quVgn3wD8Gdq4",
+  authDomain: "datagram-in.firebaseapp.com",
+  projectId: "datagram-in",
+  storageBucket: "datagram-in.appspot.com",
+  messagingSenderId: "984986151374",
+  appId: "1:984986151374:web:8428c23ad9e8bd88ee639f"
 };
 
-// Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
 function previewProfilePicture() {
