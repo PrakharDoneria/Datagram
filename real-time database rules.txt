@@ -1,0 +1,41 @@
+{
+  "rules": {
+    ".read": "auth != null",
+    ".write": "auth != null",
+
+    "users": {
+      "$uid": {
+        ".read": "$uid === auth.uid",
+        ".write": "$uid === auth.uid",
+        "username": {
+          ".validate": "newData.isString() && newData.val().length <= 30"
+        },
+        "profilePicture": {
+          ".validate": "newData.isString()"
+        },
+        "verified": {
+          ".validate": "newData.isBoolean()"
+        },
+        "banned": {
+          ".validate": "newData.isBoolean()"
+        }
+      }
+    },
+
+    "posts": {
+      ".read": "auth != null",
+      ".write": "auth != null",
+      "$postId": {
+        ".validate": "newData.child('userId').val() === auth.uid"
+      }
+    },
+
+    "comments": {
+      ".read": "auth != null",
+      ".write": "auth != null",
+      "$commentId": {
+        ".validate": "newData.child('userId').val() === auth.uid"
+      }
+    }
+  }
+}
