@@ -8,7 +8,14 @@ const firebaseConfig = {
   appId: "1:984986151374:web:8428c23ad9e8bd88ee639f"
 };
 
-firebase.initializeApp(firebaseConfig);
+// Initialize Firebase
+try {
+  firebase.initializeApp(firebaseConfig);
+  console.log('Firebase connected successfully!');
+} catch (error) {
+  console.error('Firebase connection error:', error);
+  alert('Unable to connect to Firebase. Please try again later.');
+}
 
 function previewProfilePicture() {
     const input = document.getElementById('profile-picture');
@@ -26,8 +33,8 @@ function previewProfilePicture() {
 
         reader.readAsDataURL(file);
     } else {
-        preview.src = '#';
-        preview.style.display = 'none';
+        preview.src = 'https://raw.githubusercontent.com/PrakharDoneria/Datagram/main/assets/avatar.png';
+        preview.style.display = 'block'; // Show default image if no file selected
     }
 }
 
