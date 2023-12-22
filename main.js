@@ -1,13 +1,19 @@
+import firebase from 'firebase/app';
+import 'firebase/auth';
+import 'firebase/database';
+
 const firebaseConfig = {
-  apiKey: "AIzaSyC-ZtQ4N3d5ZYZcUCETe0quVgn3wD8Gdq4",
-  authDomain: "datagram-in.firebaseapp.com",
-  projectId: "datagram-in",
-  storageBucket: "datagram-in.appspot.com",
-  messagingSenderId: "984986151374",
-  appId: "1:984986151374:web:8428c23ad9e8bd88ee639f"
+    apiKey: "AIzaSyC-ZtQ4N3d5ZYZcUCETe0quVgn3wD8Gdq4",
+    authDomain: "datagram-in.firebaseapp.com",
+    projectId: "datagram-in",
+    storageBucket: "datagram-in.appspot.com",
+    messagingSenderId: "984986151374",
+    appId: "1:984986151374:web:8428c23ad9e8bd88ee639f"
 };
 
 firebase.initializeApp(firebaseConfig);
+
+document.getElementById('loginButton').addEventListener('click', login);
 
 function login() {
     const email = document.getElementById('email').value;
@@ -36,6 +42,9 @@ function login() {
             // Hide loading animation and restore button text
             buttonLoader.style.display = 'none';
             button.innerText = 'Login';
+
+            // Additional action on login failure (e.g., displaying an alert)
+            alert('Login failed. Check your credentials and try again.');
         });
 }
 
@@ -45,12 +54,12 @@ function fetchUserDetails(userId) {
 
     userRef.once('value').then((snapshot) => {
         const userData = snapshot.val();
-        
+
         if (userData) {
             // Save user details in local storage for further use
             localStorage.setItem('userDetails', JSON.stringify(userData));
-            // Redirect to another page or perform additional actions
-            window.location.href = 'dashboard.html';
+            // Redirect to "dash.html" on successful login
+            window.location.href = 'dash.html';
         } else {
             console.log('User data not found');
         }
