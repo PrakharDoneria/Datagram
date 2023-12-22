@@ -1,109 +1,114 @@
 // Your Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyC-ZtQ4N3d5ZYZcUCETe0quVgn3wD8Gdq4",
-  authDomain: "datagram-in.firebaseapp.com",
-  projectId: "datagram-in",
-  storageBucket: "datagram-in.appspot.com",
-  messagingSenderId: "984986151374",
-  appId: "1:984986151374:web:8428c23ad9e8bd88ee639f"
+    apiKey: "AIzaSyC-ZtQ4N3d5ZYZcUCETe0quVgn3wD8Gdq4",
+    authDomain: "datagram-in.firebaseapp.com",
+    projectId: "datagram-in",
+    storageBucket: "datagram-in.appspot.com",
+    messagingSenderId: "984986151374",
+    appId: "1:984986151374:web:8428c23ad9e8bd88ee639f"
 };
 
 // Initialize Firebase
 try {
-  firebase.initializeApp(firebaseConfig);
-  console.log('Firebase connected successfully!');
-} catch (error) {
-  console.error('Firebase connection error:', error);
-  alert('Unable to connect to Firebase. Please try again later.');
-}
+    firebase.initializeApp(firebaseConfig);
+    console.log('Firebase connected successfully!');
 
-function previewProfilePicture() {
-function previewProfilePicture() {
-    const input = document.getElementById('profile-picture');
-    const preview = document.getElementById('profile-picture-preview');
+    // Add your other Firebase-related code here
 
-    const file = input.files[0];
+    function previewProfilePicture() {
+        const input = document.getElementById('profile-picture');
+        const preview = document.getElementById('profile-picture-preview');
 
-    if (file) {
-        const reader = new FileReader();
+        const file = input.files[0];
 
-        reader.onload = function (e) {
-            preview.src = e.target.result;
-        };
+        if (file) {
+            const reader = new FileReader();
 
-        reader.readAsDataURL(file);
+            reader.onload = function (e) {
+                preview.src = e.target.result;
+            };
 
-        // Show the preview container
-        preview.parentElement.style.display = 'block';
-    } else {
-        preview.src = 'https://raw.githubusercontent.com/PrakharDoneria/Datagram/main/assets/avatar.png';
-        
-        // Hide the preview container if no file selected
-        preview.parentElement.style.display = 'none';
+            reader.readAsDataURL(file);
+
+            // Show the preview container
+            preview.parentElement.style.display = 'block';
+        } else {
+            preview.src = 'https://raw.githubusercontent.com/PrakharDoneria/Datagram/main/assets/avatar.png';
+
+            // Hide the preview container if no file selected
+            preview.parentElement.style.display = 'none';
+        }
     }
-}
-function register() {
-    const username = document.getElementById('username').value;
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-    const errorMessageElement = document.getElementById('error-message');
-    const button = document.querySelector('button');
-    const buttonLoader = document.querySelector('.button-loader');
 
-    // Display loading animation
-    buttonLoader.style.display = 'block';
-    button.innerText = '';
+    function register() {
+        const username = document.getElementById('username').value;
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        const errorMessageElement = document.getElementById('error-message');
+        const button = document.querySelector('button');
+        const buttonLoader = document.querySelector('.button-loader');
 
-    // Firebase authentication
-    firebase.auth().createUserWithEmailAndPassword(email, password)
-        .then((userCredential) => {
-            // Signed up
-            const user = userCredential.user;
+        // Display loading animation
+        buttonLoader.style.display = 'block';
+        button.innerText = '';
 
-            // Save additional user data to Realtime Database
-            saveUserData(user.uid, username);
+        // Firebase authentication
+        firebase.auth().createUserWithEmailAndPassword(email, password)
+            .then((userCredential) => {
+                // Signed up
+                const user = userCredential.user;
 
-            // Send email verification
-            sendEmailVerification();
-        })
-        .catch((error) => {
-            // Handle errors
-            console.error('Registration error:', error);
+                // Save additional user data to Realtime Database
+                saveUserData(user.uid, username);
 
-            const errorMessage = error.message;
-            errorMessageElement.textContent = errorMessage;
+                // Send email verification
+                sendEmailVerification();
+            })
+            .catch((error) => {
+                // Handle errors
+                console.error('Registration error:', error);
 
-            // Hide loading animation and restore button text
-            buttonLoader.style.display = 'none';
-            button.innerText = 'Register';
+                const errorMessage = error.message;
+                errorMessageElement.textContent = errorMessage;
 
-            // Show an alert with the error message
-            alert(errorMessage);
+                // Hide loading animation and restore button text
+                buttonLoader.style.display = 'none';
+                button.innerText = 'Register';
+
+                // Show an alert with the error message
+                alert(errorMessage);
+            });
+    }
+
+    function saveUserData(userId, username) {
+        // Assuming you have a 'users' node in Realtime Database
+        const userRef = firebase.database().ref('users/' + userId);
+
+        userRef.set({
+            username: username,
+            profilePicture: '', // You can store the profile picture URL here once uploaded
+            verified: false,
+            banned: false
         });
-}
+    }
 
-function saveUserData(userId, username) {
-    // Assuming you have a 'users' node in Realtime Database
-    const userRef = firebase.database().ref('users/' + userId);
+    function sendEmailVerification() {
+        const user = firebase.auth().currentUser;
 
-    userRef.set({
-        username: username,
-        profilePicture: '', // You can store the profile picture URL here once uploaded
-        verified: false,
-        banned: false
-    });
-}
+        user.sendEmailVerification()
+            .then(() => {
+                // Email verification sent successfully
+                // Show a modal or perform any other action
+                alert('Verification email sent. Please verify your email and login.');
+            })
+            .catch((error) => {
+                console.error('Error sending verification email:', error);
+            });
+    }
 
-function sendEmailVerification() {
-    const user = firebase.auth().currentUser;
+} catch (error) {
+    console.error('Firebase connection error:', error);
 
-    user.sendEmailVerification()
-        .then(() => {
-            // Email verification sent successfully
-            // Show a modal or perform any other action
-            alert('Verification email sent. Please verify your email and login.');
-        })
-        .catch((error) => {
-            console.error('Error sending verification email:', error);
-        });
+    // Show an alert if Firebase couldn't connect
+    alert('Unable to connect to Firebase. Please try again later.');
 }
