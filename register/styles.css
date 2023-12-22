@@ -47,15 +47,18 @@ body {
 
 #profile-picture {
     display: none;
+    width: 0;
+    height: 0;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
 }
 
 #profile-picture-preview {
     width: 100%;
     height: auto;
-}
-
-#profile-picture-preview.circle {
     border-radius: 50%;
+    cursor: pointer;
 }
 
 input {
