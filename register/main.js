@@ -18,6 +18,7 @@ try {
 }
 
 function previewProfilePicture() {
+function previewProfilePicture() {
     const input = document.getElementById('profile-picture');
     const preview = document.getElementById('profile-picture-preview');
 
@@ -28,16 +29,19 @@ function previewProfilePicture() {
 
         reader.onload = function (e) {
             preview.src = e.target.result;
-            preview.style.display = 'block';
         };
 
         reader.readAsDataURL(file);
+
+        // Show the preview container
+        preview.parentElement.style.display = 'block';
     } else {
         preview.src = 'https://raw.githubusercontent.com/PrakharDoneria/Datagram/main/assets/avatar.png';
-        preview.style.display = 'block'; // Show default image if no file selected
+        
+        // Hide the preview container if no file selected
+        preview.parentElement.style.display = 'none';
     }
 }
-
 function register() {
     const username = document.getElementById('username').value;
     const email = document.getElementById('email').value;
