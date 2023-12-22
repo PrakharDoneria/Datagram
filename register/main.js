@@ -1,3 +1,8 @@
+import firebase from 'firebase/app';
+import 'firebase/auth';
+import 'firebase/database';
+
+
 // Your Firebase configuration
 const firebaseConfig = {
     apiKey: "AIzaSyC-ZtQ4N3d5ZYZcUCETe0quVgn3wD8Gdq4",
@@ -14,6 +19,10 @@ try {
     console.log('Firebase connected successfully!');
 
     // Add your other Firebase-related code here
+
+    function triggerProfilePictureInput() {
+        document.getElementById('profile-picture').click();
+    }
 
     function previewProfilePicture() {
         const input = document.getElementById('profile-picture');
@@ -105,6 +114,8 @@ try {
                 console.error('Error sending verification email:', error);
             });
     }
+
+    // Add the rest of your functions here
 
 } catch (error) {
     console.error('Firebase connection error:', error);
